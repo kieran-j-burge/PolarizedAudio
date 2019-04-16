@@ -1,0 +1,140 @@
+html,body {
+    height:100%;
+}
+
+html, body, div, * { box-sizing: border-box;}
+
+body{
+    background: #25282b;
+}
+
+body {
+    padding: 1px;
+}
+
+#background-wrapper {
+    position: absolute;
+    z-index: -1;
+    display: block;
+    margin: auto;
+    border: 1px solid transparent;
+}
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+#after {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 0, 0, 0);
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    margin: auto;
+}
+.st0 {
+    fill: #fff;
+}
+
+.center{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-op-container{
+    margin-top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.menu-op-container a{
+    text-decoration: none;
+}
+
+
+.btn-4 {
+    border: 2px solid;
+    overflow: hidden;
+    position: relative;
+}
+.btn-4 span {
+    z-index: 20;
+}
+.btn-4:after {
+    background: red;
+    content: "";
+    height: 155px;
+    left: -75px;
+    opacity: 0.2;
+    position: absolute;
+    top: -50px;
+    transform: rotate(35deg);
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+    width: 50px;
+    z-index: -10;
+}
+
+.btn-4:hover:after {
+    left: 120%;
+    transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.btn {
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 45px;
+    margin: 0 0 2em;
+    max-width: 160px;
+    position: relative;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .btn {
+        margin: 0 1em 2em;
+    }
+}
+.btn:hover {
+    text-decoration: none;
+}
+
+p a {
+    background: rgba(255, 255, 255, 0);
+    border-bottom: 1px solid;
+    color: #fff;
+    line-height: 1.4;
+    padding: 0.25em;
+    text-decoration: none;
+}
+p a:hover {
+    background: white;
+    color: #E1332D;
+}
+
+.close{
+    font-size: 70px;
+    margin-right: 15px;
+}
+
+#pa-logo{
+    height: 300px;
+}
+
+.menu-op-container a{
+    margin-left: 0px;
+}
+
+.pa-btn{
+    width: 150px;
+    margin: 0px !important;
+}

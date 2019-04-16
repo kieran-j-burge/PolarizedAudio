@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Home</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/misc/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/misc/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/misc/favicon-16x16.png"/>
+    <link rel="manifest" href="/images/misc/site.webmanifest"/>
+    <link rel="mask-icon" href="/images/misc/safari-pinned-tab.svg" color="#5bbad5"/>
+    <meta name="msapplication-TileColor" content="#da532c"/>
+    <meta name="theme-color" content="#ffffff"/>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}" href="../static/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap-theme.css}" href="../static/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" th:href="@{/css/master.css}" href="../static/css/master.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Markazi+Text" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script  th:src="@{/bootstrap/js/bootstrap.js}" src="../static/bootstrap/js/jquery.js"></script>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/renderers/CanvasRenderer.js"></script>
+    <script src="https://threejs.org/examples/js/renderers/Projector.js"></script>
+    <script src="https://threejs.org/examples/js/libs/stats.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+
+</head>
+<body>
+
+<div id="background-wrapper">
+    <div id="waves"></div>
+</div>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+
+            </div>
+            <div class="col-md-2">
+                <div class="center menu-op-container">
+                    <a href="/"  class="btn btn-4"><span>HOME</span></a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="center menu-op-container">
+                    <a href="/events"  class="btn btn-4"><span>EVENTS</span></a>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="center menu-op-container">
+                    <a href="/shop"  class="btn btn-4"><span>SHOP</span></a>
+                </div>
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ">
+
+            </div>
+            <div class="col-md-4">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"></div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+
+<script>
+
+    /*<![CDATA[*/
+
+    var SEPARATION = 200, AMOUNTX = 50, AMOUNTY = 50;
+    var container, stats;
+    var camera, scene, renderer;
+    var particles, particle, count = 0;
+    var mouseX = 0, mouseY = 0;
+    var windowHalfX = window.innerWidth / 2;
+    var windowHalfY = window.innerHeight / 2;
+    init();
+    animate();
+    function init() {
+
+        container = document.getElementById( 'waves' );
+
+        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.z = 1000;
+        scene = new THREE.Scene();
+        particles = new Array();
+        var PI2 = Math.PI * 2;
+        var material = new THREE.SpriteCanvasMaterial( {
+            color: 0x000000,
+            // background: 0x16141e,
+            program: function ( context ) {
+                context.beginPath();
+                context.arc( 0, 0, 0.5, 0, PI2, true );
+                context.fill();
+            }
+        } );
+        var i = 0;
+        for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+            for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+                particle = particles[ i ++ ] = new THREE.Sprite( material );
+                particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+                particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+                scene.add( particle );
+            }
+        }
+        renderer = new THREE.CanvasRenderer({ alpha: true }); // Set alpha `true` for transparency
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        container.appendChild( renderer.domElement );
+
+        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+        document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+        document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+        //
+        window.addEventListener( 'resize', onWindowResize, false );
+    }
+    function onWindowResize() {
+        windowHalfX = window.innerWidth / 2;
+        windowHalfY = window.innerHeight / 2;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+    //
+    function onDocumentMouseMove( event ) {
+        mouseX = event.clientX - windowHalfX;
+        mouseY = event.clientY - windowHalfY * 2;
+    }
+    function onDocumentTouchStart( event ) {
+        if ( event.touches.length === 1 ) {
+            event.preventDefault();
+            mouseX = event.touches[ 0 ].pageX - windowHalfX;
+            mouseY = event.touches[ 0 ].pageY - windowHalfY * 2;
+        }
+    }
+    function onDocumentTouchMove( event ) {
+        if ( event.touches.length === 1 ) {
+            event.preventDefault();
+            mouseX = event.touches[ 0 ].pageX - windowHalfX;
+            mouseY = event.touches[ 0 ].pageY - windowHalfY;
+        }
+    }
+    //
+    function animate() {
+        requestAnimationFrame( animate );
+        render();
+        // stats.update();
+    }
+    function render() {
+        camera.position.x += ( mouseX - camera.position.x ) * .05;
+        camera.position.y += ( - mouseY - camera.position.y ) * .05;
+        camera.lookAt( scene.position );
+        var i = 0;
+        for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+            for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+                particle = particles[ i++ ];
+                particle.position.y = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
+                    ( Math.sin( ( iy + count ) * 0.5 ) * 50 );
+                particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 4 +
+                    ( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 4;
+            }
+        }
+        renderer.render( scene, camera );
+        count += 0.1;
+    }
+    /*]]>*/
+</script>
+</html>
